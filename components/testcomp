@@ -1,0 +1,16 @@
+<View style={styles.slideContainer}>
+            <Text style={styles.sliderHeading}>{props.title}</Text>
+            <Slider
+                minimumValue={0}
+                maximumValue={100}
+                step={1}
+                trackClickable={true}
+                value={value}
+                onValueChange={mySetValues}
+                backgroundColor={bgc}
+                trackStyle={[
+                    styles.track_default
+                ]}
+                thumbStyle={styles.thumb}
+            />
+        </View>
