@@ -70,10 +70,10 @@ export default function Page() {
           <Text style={styles.homeTabHeading}>{welcomeMessage}</Text>
         </View>
         <StatusBar style="auto"></StatusBar>
-        <MySlider title="Emotional" callBackUpdate={updateBucketValues} />
         <MySlider title="Physical" callBackUpdate={updateBucketValues}/>
-        <MySlider title="Mental" callBackUpdate={updateBucketValues}/>
+        <MySlider title="Emotional" callBackUpdate={updateBucketValues} />
         <MySlider title="Spiritual" callBackUpdate={updateBucketValues}/>
+        <MySlider title="Mental" callBackUpdate={updateBucketValues}/>
         
         <Pressable onPress={onSubmitBuckets} style={styles.homeButton}>
           <Text style={styles.homeButtonText}>{buttonTitle}</Text>
