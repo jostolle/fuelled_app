@@ -10,14 +10,18 @@ export default function TabsLayout() {
       headerShown: false,
       tabBarStyle: {
         borderTopColor: '#000',
+        borderTopWidth: 1,
+        shadowColor: '#111',
+        shadowRadius: 4,
         backgroundColor: mainColor_blue,
+
       }
       }}>
       <Tabs.Screen
         name="home"
         color='white'
         options={{
-          tabBarLabel: "Home",
+          tabBarLabel: () => null,
           title: "Home",
           color: '#fff',
           tabBarIcon: ({ color }) => (
@@ -33,7 +37,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="statistics"
         options={{
-          tabBarLabel: "Statistics",
+          tabBarLabel: () => null,
           title: "Statistics",
           tabBarIcon: ({ color }) => (
             <FontAwesome
@@ -48,7 +52,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="settings"
         options={{
-          tabBarLabel: "Settings",
+          tabBarLabel: () => null,
           title: "Settings",
           tabBarIcon: ({ color }) => (
             <FontAwesome
