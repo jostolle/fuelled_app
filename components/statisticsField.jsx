@@ -52,7 +52,9 @@ const StatisticsField = props => {
         backgroundGradientToOpacity: 0.0,
         color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
         strokeWidth: 1, // optional, default 3
-        fillShadowGradientOpacity: 0.5,
+        fillShadowGradientOpacity: 0.7,
+        fillShadowGradientTo: colorBurnout,
+        fillShadowGradientFrom: colorHealthy,
         useShadowColorFromDataset: false, // optional
         segments: 0, 
         decimalPlaces: 0,
