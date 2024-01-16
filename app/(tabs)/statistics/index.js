@@ -224,7 +224,7 @@ export default function Page() {
             </View>
           </View>
           <View>
-            <LineChart
+            {emotionalData.length > 0 ? <LineChart
                 data={{
                   datasets: [
                     {
@@ -244,6 +244,7 @@ export default function Page() {
                   borderRadius: 16
                 }}
             />
+            : ""}
           </View>
           <View style={{flex: 1, flexDirection: 'row'}}> 
             <View style={{flex: 1}}>
@@ -254,7 +255,7 @@ export default function Page() {
             </View>
           </View>
           <View>
-            <LineChart
+            {physicalData.length > 0 ? <LineChart
                 data={{
                   datasets: [
                     {
@@ -273,7 +274,7 @@ export default function Page() {
                   marginVertical: 8,
                   borderRadius: 16
                 }}
-              />
+              /> : ""}
             </View>
           <View style={{flex: 1, flexDirection: 'row'}}> 
             <View style={{flex: 1}}>
@@ -284,7 +285,7 @@ export default function Page() {
             </View>
           </View>
           <View>
-            <LineChart
+            {mentalData.length > 0 ? <LineChart
                 data={{
                   datasets: [
                     {
@@ -303,7 +304,7 @@ export default function Page() {
                   marginVertical: 8,
                   borderRadius: 16
                 }}
-              />
+              /> : ""}
           </View>
           <View style={{flex: 1, flexDirection: 'row'}}> 
             <View style={{flex: 1}}>
@@ -314,7 +315,7 @@ export default function Page() {
             </View>
           </View>
           <View>
-          <LineChart
+          {spiritualData.length > 0 ? <LineChart
               data={{
                 datasets: [
                   {
@@ -333,7 +334,7 @@ export default function Page() {
                 marginVertical: 8,
                 borderRadius: 16
               }}
-            />
+            /> : ""}
           </View>
         </View>
         
