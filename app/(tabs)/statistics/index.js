@@ -200,7 +200,7 @@ export default function Page() {
     }
   };
 
-  getDataMonth();
+  //getDataMonth();
 
   return (
     <>
