@@ -1,7 +1,7 @@
 // /app/(tabs)/statistics/index.js
 import { Stack } from 'expo-router';
 import {StatusBar} from 'expo-status-bar';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { View, Text, Dimensions, SafeAreaView, ScrollView, Pressable, StyleSheet  } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { styles, colorBurnout, colorHealthy, colorWatchit } from '../../../styles.js';
@@ -201,6 +201,9 @@ export default function Page() {
   };
 
   //getDataMonth();
+  useEffect(() => {
+    getData();
+ }, []);
 
   return (
     <>

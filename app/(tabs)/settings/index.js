@@ -78,6 +78,10 @@ export default function Page() {
     }
   };
 
+  useEffect(() => {
+    getSettings();
+ }, []);
+
   return (
     <>
     <Stack.Screen options={{headerShown: false, title: 'Settings'}}></Stack.Screen>
