@@ -155,7 +155,6 @@ export default function Page() {
     setMental(result.mental);
     setPhysical(result.physical);
     setSpiritual(result.spiritual); 
-    setHeading("Today's values:");
   }
   
   function calculateStyle(value) {
@@ -201,29 +200,28 @@ export default function Page() {
     }
   };
 
+  getDataMonth();
+
   return (
     <>
     <Stack.Screen options={{headerShown: false, title: 'Statistics'}}></Stack.Screen>
-    <ScrollView>
+    <ScrollView style={styles.scrollViewContainer}>
       <View style={styles.statisticsContainer} onLayout={getData}>
         <View style={{height: 40}}></View>
         <Text style={styles.homeTabHeading}>{heading}</Text>
         <StatusBar style="auto"></StatusBar>
-        <ProgressChart
-          data={{
-            labels: ["Emotional", "Physical", "Mental", "Spiritual"], // optional
-            data: [ emotional/100, physical/100, mental/100, spiritual/100]
-          }}
-          width={350}
-          height={220}
-          strokeWidth={12}
-          radius={16}
-          chartConfig={chartConfig}
-          hideLegend={false}
-        />
-        <View style={{width: 300, margin: 16}}>
-          <View style={{flex: 1, flexDirection: 'row'}}> 
-            <View style={{flex: 1}}>
+
+        <View style={{padding: 16}}>
+          <Text style={styles.regularText}>
+            You have tracked your values on {emotionalData.length} different days. <br></br>
+            Below you see your overall average as well as a graph of all the entries.
+          </Text>
+        </View>
+        <View style={{height: 40}}></View>
+
+        <View style={{}}>
+          <View style={{ flexDirection: 'row'}}> 
+            <View style={{flex: 2, alignItems: 'flex-start'}}>
               <Text style={styles.statisticsText}>Emotional: </Text>
             </View>
             <View style={{flex: 1, alignItems: 'flex-end'}}>
@@ -345,19 +343,6 @@ export default function Page() {
           </View>
         </View>
         
-        <View style={{height: 20}}></View>
-        <View style={styles.buttonRow}>
-          <Pressable onPress={getData} style={styles.statisticsButton}>
-            <Text style={styles.statisticsButtonText}>Today</Text>
-          </Pressable>
-
-          <Pressable onPress={getDataMonth} style={styles.statisticsButton}>
-            <Text style={styles.statisticsButtonText}>30-Day</Text>
-          </Pressable>
-          <Pressable onPress={getDataHalfYear} style={styles.statisticsButton}>
-            <Text style={styles.statisticsButtonText}>6-Months</Text>
-          </Pressable>
-        </View>
         <View style={{height: 20}}></View>
       </View>
     </ScrollView>
