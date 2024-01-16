@@ -2,11 +2,11 @@
 
 import { Stack } from 'expo-router';
 import {StatusBar} from 'expo-status-bar'
-import { useState } from 'react';
-import { View, Text, SafeAreaView, Pressable, Switch, StyleSheet  } from 'react-native';
+import { useState, useEffect } from 'react';
+import { View, Text, Pressable, Switch  } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { styles, colorBurnout, colorHealthy, colorWatchit } from '../../../styles.js';
-import { createDateStringFromToday, createDateStringFromDate, getRandomInt } from '../../../utility/utility.js';
+import { styles } from '../../../styles.js';
+import { createDateStringFromDate, getRandomInt } from '../../../utility/utility.js';
 import { useFonts } from 'expo-font';
 import { ScrollView } from 'react-native-gesture-handler';
 
