@@ -2,15 +2,24 @@
 
 import { Tabs } from "expo-router";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { styles, mainColor_red, mainColor_blue } from '../../styles.js';
 
 export default function TabsLayout() {
   return (
-    <Tabs screenOptions={{ headerShown: false }}>
+    <Tabs screenOptions={{ 
+      headerShown: false,
+      tabBarStyle: {
+        borderTopColor: '#000',
+        backgroundColor: mainColor_blue,
+      }
+      }}>
       <Tabs.Screen
         name="home"
+        color='white'
         options={{
           tabBarLabel: "Home",
           title: "Home",
+          color: '#fff',
           tabBarIcon: ({ color }) => (
             <FontAwesome
               size={28}
