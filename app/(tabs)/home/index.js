@@ -58,7 +58,8 @@ export default function Page() {
     setButtonTitle("Update");
     setWelcomeMessage("You've submitted today, but you can update it here:")
   } 
- 
+
+  //AsyncStorage.clear();
 
   return (
     <>
