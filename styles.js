@@ -3,23 +3,40 @@ import { StyleSheet } from "react-native";
 export const colorHealthy = "#238823";
 export const colorWatchit = "#FFBF00";
 export const colorBurnout = "#D2222D";
+export const mainColor_blue = "#181a4a";
+export const mainColor_red = "#a33d25";
+
+export const mainFont1 = 'Aquire';
+export const mainFont2 = 'Questrial';
 
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: mainColor_blue,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        color: '#fff',
+    },
+    scrollViewContainer: {
+      backgroundColor: mainColor_blue,
+      color: '#fff',
+      padding: 16,
+    },
+    regularText: {
+      fontFamily: mainFont2,
+      color: '#fff',
+      fontSize: 16,
+      fontWeight: 'bold',
+      lineHeight: 20,
     },
     statisticsContainer: {
-      flex: 1,
       backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'flex-end'
     },
     statisticsContainer: {
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: mainColor_blue,
       alignItems: 'center',
       justifyContent: 'start'
     },
@@ -32,7 +49,8 @@ export const styles = StyleSheet.create({
     statisticsText: {
       fontSize: 24,
       fontWeight: 'bold',
-      color: '#000',
+      fontFamily: mainFont1,
+      color: '#fff',
       padding: 8
     }, 
     statisticsValueText: {
@@ -50,21 +68,37 @@ export const styles = StyleSheet.create({
       paddingHorizontal: 32,
       borderRadius: 4,
       elevation: 3,
-      backgroundColor: 'black',
-      margin: 8
+      backgroundColor: '#fff',
+      margin: 8,
+      fontFamily: mainFont1,
     },
     statisticsButtonText: {
       fontSize: 16,
       lineHeight: 21,
       fontWeight: 'bold',
       letterSpacing: 0.25,
-      color: 'white',
+      color: '#000',
+      fontFamily: mainFont1,
     },
     homeTabHeading: {
       fontWeight: "bold",
+      fontFamily: mainFont1,
       fontSize: 24,
       margin: 16,
       textAlign: 'center',
+      color: '#fff',
+    },
+    settingsItem: {
+      flexDirection: 'row',
+      margin: 8,
+    },
+    settingsListItem: {
+      fontWeight: "bold",
+      flex:1,
+      fontSize: 18,
+      padding: 8,
+      fontFamily: mainFont1,
+      color: '#fff',
     },
     slideContainer: {
       flex: 1,
@@ -88,7 +122,7 @@ export const styles = StyleSheet.create({
       width: 10,
       borderColor: '#000',
       borderWidth: 1,
-      shadowColor: '#555',
+      shadowColor: '#fff',
       shadowOpacity: 0.7,
       shadowRadius: 5,
     },
@@ -97,31 +131,36 @@ export const styles = StyleSheet.create({
       flex:1,
       fontSize: 18,
       padding: 8,
+      fontFamily: mainFont1,
+      color: '#fff',
     },
     sliderValue: {
       flex: 1,
       fontSize: 18,
+      fontFamily: mainFont1,
       borderRadius: 5,
       fontWeight: 'bold',
-      color: '#000',
+      color: '#fff',
       padding: 8, 
     },
-    SubmitButton: {
+    homeButton: {
       alignItems: 'center',
       justifyContent: 'center',
       paddingVertical: 12,
       paddingHorizontal: 32,
       borderRadius: 4,
       elevation: 3,
-      backgroundColor: '#115E00',
-      margin: 2
+      backgroundColor: '#fff',
+      margin: 8,
+      fontFamily: mainFont1,
     },
-    submitButtonText: {
+    homeButtonText: {
       fontSize: 16,
       lineHeight: 21,
       fontWeight: 'bold',
       letterSpacing: 0.25,
-      color: 'white',
+      color: '#000',
+      fontFamily: mainFont1,
     },
     behind: {
       alignItems: 'center',
@@ -133,7 +172,10 @@ export const styles = StyleSheet.create({
       width: '100%',
       height: '100%',
       borderRadius: 5,
-      backgroundColor: '#A55'
+      backgroundColor: '#A55',
+      shadowColor: '#fff',
+      shadowOpacity: 0.7,
+      shadowRadius: 5,
     },
     behindBurnout: {
       flex: 3,
@@ -172,4 +214,9 @@ export const styles = StyleSheet.create({
       borderTopWidth: 1,
       borderColor: '#111',
     },
+    licenseText: {
+      fontFamily: mainFont1,
+      color: '#fff',
+      textAlign: 'center'
+    }
 })

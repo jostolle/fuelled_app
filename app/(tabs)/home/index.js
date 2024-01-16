@@ -7,8 +7,15 @@ import { styles } from '../../../styles.js';
 import MySlider from '../../../components/MySlider.jsx';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createDateStringFromToday } from '../../../utility/utility.js';
+import { useFonts } from 'expo-font';
 
 export default function Page() {
+
+  const [fontsLoaded] = useFonts({
+    'Questrial': require('../../../assets/fonts/questrial.ttf'),
+    'Aquire': require('../../../assets/fonts/Aquire-BW0ox.otf')
+  });
+
   // todo: on startup, read values from file
   const [emotional, setEmotional] = useState(0);
   const [physical, setPhysical] = useState(0);
@@ -67,8 +74,8 @@ export default function Page() {
         <MySlider title="Mental" callBackUpdate={updateBucketValues}/>
         <MySlider title="Spiritual" callBackUpdate={updateBucketValues}/>
         
-        <Pressable onPress={onSubmitBuckets} style={styles.statisticsButton}>
-          <Text style={styles.statisticsButtonText}>{buttonTitle}</Text>
+        <Pressable onPress={onSubmitBuckets} style={styles.homeButton}>
+          <Text style={styles.homeButtonText}>{buttonTitle}</Text>
         </Pressable>
         
         <View style={{height: 20}}></View>

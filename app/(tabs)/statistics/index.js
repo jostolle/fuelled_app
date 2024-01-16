@@ -6,6 +6,7 @@ import { View, Text, Dimensions, SafeAreaView, ScrollView, Pressable, StyleSheet
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { styles, colorBurnout, colorHealthy, colorWatchit } from '../../../styles.js';
 import { createDateStringFromToday, createDateStringFromDate, getRandomInt } from '../../../utility/utility.js';
+import { useFonts } from 'expo-font';
 import {
   LineChart,
   BarChart,
@@ -24,7 +25,13 @@ export default function Page() {
   const [physicalData, setPhysicalData] = useState([]);
   const [mentalData, setMentalData] = useState([]);
   const [spiritualData, setSpiritualData] = useState([]);
-  const [heading, setHeading] = useState("Today's values:");
+  const [heading, setHeading] = useState("Statistics");
+
+  const [fontsLoaded] = useFonts({
+    'Questrial': require('../../../assets/fonts/questrial.ttf'),
+    'Aquire': require('../../../assets/fonts/Aquire-BW0ox.otf')
+  });
+
   // retrieve data
   const getData = async () => {
     try {

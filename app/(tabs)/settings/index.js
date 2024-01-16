@@ -3,13 +3,18 @@
 import { Stack } from 'expo-router';
 import {StatusBar} from 'expo-status-bar'
 import { useState } from 'react';
-import { View, Text, SafeAreaView, Pressable, StyleSheet  } from 'react-native';
+import { View, Text, SafeAreaView, Pressable, Switch, StyleSheet  } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { styles, colorBurnout, colorHealthy, colorWatchit } from '../../../styles.js';
 import { createDateStringFromToday, createDateStringFromDate, getRandomInt } from '../../../utility/utility.js';
+import { useFonts } from 'expo-font';
 
 export default function Page() {
 
+  const [fontsLoaded] = useFonts({
+    'Questrial': require('../../../assets/fonts/questrial.ttf'),
+    'Aquire': require('../../../assets/fonts/Aquire-BW0ox.otf')
+  });
   const [heading, setHeading] = useState("Settings");
 
   const generateData = async () => {
