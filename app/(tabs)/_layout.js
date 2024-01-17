@@ -39,6 +39,7 @@ export default function TabsLayout() {
         options={{
           tabBarLabel: () => null,
           title: "Statistics",
+          unmountOnBlur: true,
           tabBarIcon: ({ color }) => (
             <FontAwesome
               size={28}
@@ -54,6 +55,7 @@ export default function TabsLayout() {
         options={{
           tabBarLabel: () => null,
           title: "Settings",
+          unmountOnBlur: true,
           tabBarIcon: ({ color }) => (
             <FontAwesome
               size={28}
