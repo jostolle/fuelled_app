@@ -6,9 +6,10 @@ import { useState, useEffect } from 'react';
 import { View, Text, Pressable, Switch  } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { styles } from '../../../styles.js';
-import { createDateStringFromDate, getRandomInt } from '../../../utility/utility.js';
+import { createDateStringFromDate, getRandomInt, Comparator, DataPrefixString } from '../../../utility/utility.js';
 import { useFonts } from 'expo-font';
 import { ScrollView } from 'react-native-gesture-handler';
+import RawDataTable from '../../../components/RawDataTable.jsx';
 
 export default function Page() {
 
@@ -22,6 +23,7 @@ export default function Page() {
   const [heading, setHeading] = useState("Settings");
   const [notificationEnabled, setNotificationEnabled] = useState(false);
   const [advancedEnabled, setAdvancedEnabled] = useState(false);
+  const [rawData, setRawData] = useState([]);
 
   const toggleSwitchNotification = async () => {
     try {
@@ -38,6 +40,39 @@ export default function Page() {
   const toggleSwitchAdvanced = () => {
     // toggle
     setAdvancedEnabled(previousState => !previousState);
+  };
+
+  // retrieve data
+  const getData = async () => {
+    try {
+      // ask for all keys and items
+      const keys = await AsyncStorage.getAllKeys()
+      const items = await AsyncStorage.multiGet(keys)
+      items.sort(Comparator);
+      //console.log(keys);
+      //console.log(items);
+
+      let filteredData = [];
+
+      // go through all items, check if it's a date entry
+      for (let x in items) {
+        let item = items[x];
+        // only use date-entries
+        if (item[0].startsWith(DataPrefixString)) {
+          let entry = JSON.parse(item[1]);
+          entry.key = item[0].replace("date_","");
+          filteredData.push(entry);
+        }
+        // ignore the rest
+      }
+      if (filteredData.length > 0) {
+        setRawData(filteredData);
+      }
+      return true;
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
   };
 
   // retrieve settings 
@@ -84,6 +119,7 @@ export default function Page() {
 
   useEffect(() => {
     getSettings();
+    getData();
  }, []);
 
   return (
@@ -139,8 +175,6 @@ export default function Page() {
           >
             <Text style={styles.statisticsButtonText}>Generate Data</Text>
           </Pressable>
-          <View style={{height: 40}}></View>
-          
           <Pressable onPress={deleteData} 
             style={({ pressed }) => [
               styles.statisticsButton,
@@ -151,7 +185,6 @@ export default function Page() {
           >
             <Text style={styles.statisticsButtonText}>Delete All Data</Text>
           </Pressable>
-          <View style={{height: 40}}></View>
 
           <Pressable onPress={() => {}} style={styles.statisticsButton}>
             <Text style={styles.statisticsButtonText}>Export Data</Text>
@@ -161,8 +194,17 @@ export default function Page() {
           </Pressable>
           <View style={{height: 40}}></View>
 
+          <Text style={styles.settingsHeading}>Raw Data</Text> 
+
+          <RawDataTable rawData={rawData}></RawDataTable>
+          
+          <View style={{height: 40}}></View>
+
           <View>
+            <Text style={styles.settingsHeading}>Credits and Licenses</Text> 
             <Text style={styles.licenseText}>Icons from Freepik und UIcons</Text>
+            <Text style={styles.licenseText}></Text>
+            <Text style={styles.licenseText}>Special thanks to Alex (@vacarsu)</Text>
           </View>
         </View>
         : null }

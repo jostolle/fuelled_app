@@ -100,6 +100,15 @@ export const styles = StyleSheet.create({
       fontFamily: mainFont1,
       color: '#fff',
     },
+    settingsHeading: {
+      fontWeight: "bold",
+      flex:1,
+      fontSize: 18,
+      marginLeft: 16,
+      marginBottom: 16,
+      fontFamily: mainFont1,
+      color: '#fff',
+    },
     slideContainer: {
       flex: 1,
       width: 300,
@@ -219,8 +228,25 @@ export const styles = StyleSheet.create({
       borderColor: '#111',
     },
     licenseText: {
-      fontFamily: mainFont1,
+      fontFamily: mainFont2,
       color: '#fff',
-      textAlign: 'center'
+      textAlign: 'left',
+      marginLeft: 24,
+    },
+    rawDataTableKeyField: {
+      width: 100,
+    },
+    rawDataTableDataField: {
+      width: 50,
+    },
+    rawDataTableTextHeader: {
+      color: '#fff',
+      fontFamily: mainFont1,
+      marginBottom: 8,
+    },
+    rawDataTableText: {
+      color: '#fff',
+      fontFamily: mainFont2,
+      marginBottom: 4,
     }
 })

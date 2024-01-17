@@ -15,3 +15,12 @@ export function createDateStringFromDate(dateInput) {
 export function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
+
+
+export function Comparator(a, b) {
+    if (a[0] < b[0]) return -1;
+    if (a[0] > b[0]) return 1;
+    return 0;
+}
+
+export const DataPrefixString = "date_";

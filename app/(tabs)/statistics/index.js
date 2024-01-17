@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { styles } from '../../../styles.js';
 import StatisticsField from '../../../components/statisticsField.jsx';
 import { useFonts } from 'expo-font';
+import { Comparator, DataPrefixString } from '../../../utility/utility.js';
 
 export default function Page() {
   const [emotional, setEmotional] = useState(0);
@@ -25,12 +26,6 @@ export default function Page() {
     'Aquire': require('../../../assets/fonts/Aquire-BW0ox.otf')
   });
 
-  function Comparator(a, b) {
-    if (a[0] < b[0]) return -1;
-    if (a[0] > b[0]) return 1;
-    return 0;
-  }
-
   // retrieve data
   const getData = async () => {
     try {
@@ -47,14 +42,12 @@ export default function Page() {
       items.sort(Comparator);
       //console.log(keys);
       //console.log(items);
-      
-      const dataPrefixString = "date_";
 
       // go through all items, check if it's a date entry
       for (let x in items) {
         let item = items[x];
         // only use date-entries
-        if (item[0].startsWith(dataPrefixString)) {
+        if (item[0].startsWith(DataPrefixString)) {
           var data = JSON.parse(item[1]);
           runningData[0]+=data.emotional;
           eData.push(data.emotional);
