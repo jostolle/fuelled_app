@@ -42,19 +42,19 @@ export default function Page() {
       let sData = [];
 
       // ask for all keys and items
-      // TODO: sort array
       const keys = await AsyncStorage.getAllKeys()
       const items = await AsyncStorage.multiGet(keys)
-      console.log(keys);
-      console.log(items);
       items.sort(Comparator);
-      console.log(items);
+      //console.log(keys);
+      //console.log(items);
+      
+      const dataPrefixString = "date_";
 
       // go through all items, check if it's a date entry
       for (let x in items) {
         let item = items[x];
         // only use date-entries
-        if (item[0].startsWith("date_")) {
+        if (item[0].startsWith(dataPrefixString)) {
           var data = JSON.parse(item[1]);
           runningData[0]+=data.emotional;
           eData.push(data.emotional);
@@ -116,7 +116,7 @@ export default function Page() {
           <>
           <View style={{padding: 16}}>
             <Text style={styles.regularText}>
-              You have tracked your values on {numberEntries} different days. <br></br>
+              You have tracked your values on {numberEntries} different days.
               Below you see your overall average as well as a graph of all the entries.
             </Text>
           </View>

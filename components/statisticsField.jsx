@@ -37,7 +37,6 @@ const StatisticsField = props => {
       
       // if we have too many data points, we don't want the dots displayed.
       function DotsYesNo(value) {
-        console.log(value);
         if (value < 15) {
             return "1";
         } else {
