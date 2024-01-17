@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createDateStringFromToday } from '../utility/utility.js';
 
 const MySlider = props => {
-    const [value, setValue] = useState(0);
+    const [value, setValue] = useState(50);
     const [bgc, setBackgroundColor] = useState("#ddd");
 
     function mySetValues(valueArray){
