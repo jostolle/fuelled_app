@@ -125,12 +125,14 @@ export const styles = StyleSheet.create({
       shadowColor: '#fff',
       shadowOpacity: 0.7,
       shadowRadius: 5,
+      shadowOffset: 0,
     },
     sliderHeading: {
       fontWeight: "bold",
       flex:1,
       fontSize: 18,
-      padding: 8,
+      padding: 16,
+      paddingLeft: 0,
       fontFamily: mainFont1,
       color: '#fff',
     },
@@ -141,7 +143,8 @@ export const styles = StyleSheet.create({
       borderRadius: 5,
       fontWeight: 'bold',
       color: '#fff',
-      padding: 8, 
+      padding: 16, 
+      paddingRight: 0,
     },
     homeButton: {
       alignItems: 'center',
@@ -176,6 +179,7 @@ export const styles = StyleSheet.create({
       shadowColor: '#fff',
       shadowOpacity: 0.7,
       shadowRadius: 5,
+      shadowOffset: 0,
     },
     behindBurnout: {
       flex: 3,
