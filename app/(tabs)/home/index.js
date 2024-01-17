@@ -1,13 +1,14 @@
 // /app/(tabs)/home/index.js
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
-import { View, Text, Pressable } from 'react-native';
+import { useState, useCallback, useEffect } from 'react';
+import { View, ScrollView, Text, Pressable } from 'react-native';
 import { styles } from '../../../styles.js';
 import MySlider from '../../../components/MySlider.jsx';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createDateStringFromToday } from '../../../utility/utility.js';
 import { useFonts } from 'expo-font';
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 export default function Page() {
 
@@ -16,14 +17,18 @@ export default function Page() {
     'Aquire': require('../../../assets/fonts/Aquire-BW0ox.otf')
   });
 
+  const headingSubmitToday = "How full are your buckets today?";
+  const updatedValuesText = "You've submitted today, but you can update the values.";
+
   // todo: on startup, read values from file
-  const [emotional, setEmotional] = useState(0);
-  const [physical, setPhysical] = useState(0);
-  const [mental, setMental] = useState(0);
-  const [spiritual, setSpiritual] = useState(0);
+  const [emotional, setEmotional] = useState(50);
+  const [physical, setPhysical] = useState(50);
+  const [mental, setMental] = useState(50);
+  const [spiritual, setSpiritual] = useState(50);
   const [buttonTitle, setButtonTitle] = useState("Submit");
-  const [welcomeMessage, setWelcomeMessage] = useState("How full are your buckets today?");
+  const [welcomeMessage, setWelcomeMessage] = useState(headingSubmitToday);
   const [submitted, setSubmitted] = useState(false);
+  const [submitConfirm, setSubmitConfirm] = useState(false);
 
   function updateBucketValues(update) {
     if (update.name == "Emotional") {
@@ -54,17 +59,41 @@ export default function Page() {
   function onSubmitBuckets() {
     storeData({emotional: emotional, physical: physical, spiritual: spiritual, mental: mental});
     setSubmitted(true);
-    // todo write to file
     setButtonTitle("Update");
-    setWelcomeMessage("You've submitted today, but you can update it here:")
+    setSubmitConfirm(true);
+    setTimeout(toggleSubmitConfirm,1000);
   } 
 
-  //AsyncStorage.clear();
+  function toggleSubmitConfirm() {
+    setSubmitConfirm(false);
+  }
+
+  const getTodayValue = async () => {
+    // fetch today's value
+    try {
+      const date = createDateStringFromToday();
+      const value = await AsyncStorage.getItem(date);
+      if (value != null) {
+        setSubmitted(true);
+        setButtonTitle("Update");
+      } else {
+        setSubmitted(false);
+        setButtonTitle("Submit");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  useEffect(() => {
+    getTodayValue();
+ }, []);
 
   return (
     <>
     <Stack.Screen options={{headerShown: false, title: 'Today'}}></Stack.Screen>
-    <View style={styles.container}>
+    <ScrollView style={styles.scrollViewContainer}>
+      <View style={styles.container}>
         <View style={{height: 20}}></View>
         <View style={{alignContent: 'center', justifyContent: 'center', flexDirection: 'row'}}>
           <Text style={styles.homeTabHeading}>{welcomeMessage}</Text>
@@ -75,12 +104,42 @@ export default function Page() {
         <MySlider title="Spiritual" callBackUpdate={updateBucketValues}/>
         <MySlider title="Mental" callBackUpdate={updateBucketValues}/>
         
-        <Pressable onPress={onSubmitBuckets} style={styles.homeButton}>
-          <Text style={styles.homeButtonText}>{buttonTitle}</Text>
-        </Pressable>
-        
         <View style={{height: 20}}></View>
-    </View>
+        <View flexDirection='row'>
+          <View style={{flex: 1, alignContent: 'center', alignItems: 'center'}}>
+            { submitConfirm ?
+              <FontAwesome
+              size={18}
+              style={{ margin: 16 }}
+              name="check"
+              color="#fff"
+            />
+              : null }
+          </View>
+          <View style={{flex: 3}}>
+            <Pressable onPress={onSubmitBuckets} 
+              style={({pressed}) => [
+                styles.homeButton,
+                {
+                  backgroundColor: pressed ? 'rgb(210, 230, 255)' : 'white',
+                }
+            ]}>
+              <Text style={styles.homeButtonText}>{buttonTitle}</Text>
+            </Pressable>
+          </View>
+          <View style={{flex: 1}}></View>
+        </View>
+        
+        { submitted ?
+          <View style={{padding: 16}}>
+            <Text style={styles.regularText}>
+              { updatedValuesText }
+            </Text>
+          </View>
+          : null }
+      </View>
+      <View style={{height: 20}}></View>
+    </ScrollView>
     </>
   );
 }
