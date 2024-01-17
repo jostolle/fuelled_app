@@ -49,7 +49,7 @@ export default function Page() {
         var data = JSON.parse(jsonValue);
         if( data != null) {
           // update setting
-          notificationEnabled = data;
+          setNotificationEnabled(data);
         }
         return true;
       } else {
@@ -60,6 +60,10 @@ export default function Page() {
       return false;
     }
   };
+
+  const deleteData = () => {
+    AsyncStorage.clear();
+  }
 
   const generateData = async () => {
     try {
@@ -124,8 +128,28 @@ export default function Page() {
         <View >
           <View style={{height: 40}}></View>
           <Text style={styles.homeTabHeading}>Advanced Settings</Text>
-          <Pressable onPress={generateData} style={styles.statisticsButton}>
-            <Text style={styles.statisticsButtonText}>Generate Random Data</Text>
+        
+          <Pressable onPress={generateData} 
+            style={({ pressed }) => [
+              styles.statisticsButton,
+              { 
+                backgroundColor: pressed ? 'rgb(210, 230, 255)' : 'white',
+              },
+            ]}
+          >
+            <Text style={styles.statisticsButtonText}>Generate Data</Text>
+          </Pressable>
+          <View style={{height: 40}}></View>
+          
+          <Pressable onPress={deleteData} 
+            style={({ pressed }) => [
+              styles.statisticsButton,
+              { 
+                backgroundColor: pressed ? 'rgb(210, 230, 255)' : 'white',
+              },
+            ]}
+          >
+            <Text style={styles.statisticsButtonText}>Delete All Data</Text>
           </Pressable>
           <View style={{height: 40}}></View>
 
