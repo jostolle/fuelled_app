@@ -3,7 +3,7 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useState, useCallback, useEffect } from 'react';
 import { View, ScrollView, Text, Pressable } from 'react-native';
-import { styles } from '../../../styles.js';
+import { mainFont1, mainFontColor, styles } from '../../../styles.js';
 import MySlider from '../../../components/MySlider.jsx';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createDateStringFromToday } from '../../../utility/utility.js';
@@ -39,7 +39,7 @@ export default function Page() {
     }
     if (update.name == "Mental") {
       setMental(update.value);
-    }
+    } 
     if (update.name == "Spiritual") {
       setSpiritual(update.value);
     }
@@ -106,17 +106,7 @@ export default function Page() {
         
         <View style={{height: 20}}></View>
         <View flexDirection='row'>
-          <View style={{flex: 1, alignContent: 'center', alignItems: 'center'}}>
-            { submitConfirm ?
-              <FontAwesome
-              size={18}
-              style={{ margin: 16 }}
-              name="check"
-              color="#fff"
-            />
-              : null }
-          </View>
-          <View style={{flex: 3}}>
+          <View>
             <Pressable onPress={onSubmitBuckets} 
               style={({pressed}) => [
                 styles.homeButton,
@@ -124,10 +114,21 @@ export default function Page() {
                   backgroundColor: pressed ? 'rgb(210, 230, 255)' : 'white',
                 }
             ]}>
-              <Text style={styles.homeButtonText}>{buttonTitle}</Text>
+              <Text style={styles.homeButtonText}>
+                {buttonTitle}
+                { submitConfirm ?
+              <FontAwesome
+              size={18}
+              style={{ paddingLeft: 8 }}
+              name="check"
+              color={mainFontColor}
+            />
+              : null }
+              
+              </Text>
+              
             </Pressable>
           </View>
-          <View style={{flex: 1}}></View>
         </View>
         
         { submitted ?
