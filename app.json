@@ -7,7 +7,15 @@
     "plugins": [
       "expo-router"
     ],
+    "android": {
+      "compileSdkVersion": 30,
+      "targetSdkVersion": 30,
+      "package": "com.anonymous.buckets"
+    },
     "name": "buckets",
-    "slug": "buckets"
+    "slug": "buckets",
+    "ios": {
+      "bundleIdentifier": "com.anonymous.buckets"
+    }
   }
 }

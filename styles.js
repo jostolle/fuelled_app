@@ -5,6 +5,7 @@ export const colorWatchit = "#FFBF00";
 export const colorBurnout = "#D2222D";
 export const mainColor_blue = "#181a4a";
 export const mainColor_red = "#a33d25";
+export const underlayColor = "#cccccc";
 
 export const mainFont1 = 'Aquire';
 export const mainFont2 = 'Questrial';
