@@ -1,30 +1,32 @@
 import { StyleSheet } from "react-native";
 
-export const colorHealthy = "#238823";
-export const colorWatchit = "#FFBF00";
-export const colorBurnout = "#D2222D";
-export const mainColor_blue = "#181a4a";
-export const mainColor_red = "#a33d25";
+export const colorHealthy = "#161242";
+export const colorWatchit = "#E42A28";
+export const colorBurnout = "#C1203D";
+export const mainColor_blue = "#161242";
+export const mainColor_red = "#C1203D";
+export const mainBackgroundColor = "#F2F2F3";
+export const mainFontColor = "#000";
 
-export const mainFont1 = 'Aquire';
+export const mainFont1 = 'Questrial';
 export const mainFont2 = 'Questrial';
 
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: mainColor_blue,
+        backgroundColor: mainBackgroundColor,
         alignItems: 'center',
         justifyContent: 'center',
-        color: '#fff',
+        color: mainFontColor,
     },
     scrollViewContainer: {
-      backgroundColor: mainColor_blue,
-      color: '#fff',
+      backgroundColor: mainBackgroundColor,
+      color: mainFontColor,
       padding: 16,
     },
     regularText: {
       fontFamily: mainFont2,
-      color: '#fff',
+      color: mainFontColor,
       fontSize: 16,
       fontWeight: 'bold',
       lineHeight: 20,
@@ -36,7 +38,7 @@ export const styles = StyleSheet.create({
     },
     statisticsContainer: {
       flex: 1,
-      backgroundColor: mainColor_blue,
+      backgroundColor: mainBackgroundColor,
       alignItems: 'center',
       justifyContent: 'start'
     },
@@ -49,16 +51,16 @@ export const styles = StyleSheet.create({
     statisticsText: {
       fontSize: 24,
       fontWeight: 'bold',
+      textTransform: 'uppercase',
       fontFamily: mainFont1,
-      color: '#fff',
+      color: mainFontColor,
       padding: 8
     }, 
     statisticsValueText: {
       fontSize: 24,
       borderRadius: 5,
-      fontWeight: 'bold',
-      color: '#fff',
-      backgroundColor: '#bbb',
+      fontFamily: mainFont1,
+      color: mainFontColor,
       padding: 8
     }, 
     statisticsButton: {
@@ -67,6 +69,8 @@ export const styles = StyleSheet.create({
       paddingVertical: 12,
       paddingHorizontal: 32,
       borderRadius: 4,
+      borderWidth: 1,
+      borderColor: '#000',
       elevation: 3,
       backgroundColor: '#fff',
       margin: 8,
@@ -86,7 +90,7 @@ export const styles = StyleSheet.create({
       fontSize: 24,
       margin: 16,
       textAlign: 'center',
-      color: '#fff',
+      color: mainFontColor,
     },
     settingsItem: {
       flexDirection: 'row',
@@ -98,7 +102,7 @@ export const styles = StyleSheet.create({
       fontSize: 18,
       padding: 8,
       fontFamily: mainFont1,
-      color: '#fff',
+      color: mainFontColor,
     },
     slideContainer: {
       flex: 1,
@@ -111,7 +115,7 @@ export const styles = StyleSheet.create({
     track_default: {
       backgroundColor: '#d0d0d0',
       borderRadius: 5,
-      borderColor: '#111',
+      borderColor: mainBackgroundColor,
       height: 40,
       opacity: 0,
     },
@@ -123,18 +127,19 @@ export const styles = StyleSheet.create({
       borderColor: '#000',
       borderWidth: 1,
       shadowColor: '#fff',
-      shadowOpacity: 0.7,
+      shadowOpacity: 0,
       shadowRadius: 5,
       shadowOffset: 0,
     },
     sliderHeading: {
       fontWeight: "bold",
+      textTransform: "uppercase",
       flex:1,
       fontSize: 18,
       padding: 16,
       paddingLeft: 0,
       fontFamily: mainFont1,
-      color: '#fff',
+      color: mainFontColor,
     },
     sliderValue: {
       flex: 1,
@@ -142,7 +147,7 @@ export const styles = StyleSheet.create({
       fontFamily: mainFont1,
       borderRadius: 5,
       fontWeight: 'bold',
-      color: '#fff',
+      color: mainFontColor,
       padding: 16, 
       paddingRight: 0,
     },
@@ -152,6 +157,8 @@ export const styles = StyleSheet.create({
       paddingVertical: 12,
       paddingHorizontal: 32,
       borderRadius: 4,
+      borderColor: '#000',
+      borderWidth: 1,
       elevation: 3,
       backgroundColor: '#fff',
       margin: 8,
@@ -162,6 +169,7 @@ export const styles = StyleSheet.create({
       lineHeight: 21,
       fontWeight: 'bold',
       letterSpacing: 0.25,
+      textTransform: 'uppercase',
       color: '#000',
       fontFamily: mainFont1,
     },
@@ -174,53 +182,45 @@ export const styles = StyleSheet.create({
       top: 0,
       width: '100%',
       height: '100%',
-      borderRadius: 5,
-      backgroundColor: '#A55',
+      borderRadius: 2,
+      borderColor: mainBackgroundColor,
+      backgroundColor: mainBackgroundColor,
       shadowColor: '#fff',
-      shadowOpacity: 0.7,
+      shadowOpacity: 0,
       shadowRadius: 5,
       shadowOffset: 0,
     },
     behindBurnout: {
       flex: 3,
-      borderBottomLeftRadius: 5,
-      borderTopLeftRadius: 5,
+      borderRadius: 3,
       width: '100%',
       height: '100%',
       backgroundColor: colorBurnout,
-      borderLeftWidth: 1,
-      borderRightWidth: 0,
-      borderBottomWidth: 1,
-      borderTopWidth: 1,
-      borderColor: '#111',
+      borderWidth: 1,
+      borderColor: mainBackgroundColor,
     },
     behindWatchit: {
       flex: 4,
       width: '100%',
       height: '100%',
       backgroundColor: colorWatchit,
-      borderLeftWidth: 0,
-      borderRightWidth: 0,
-      borderBottomWidth: 1,
-      borderTopWidth: 1,
-      borderColor: '#111',
+      borderRadius: 3,
+      borderWidth: 1,
+      borderColor: mainBackgroundColor,
     },
     behindHealthy: {
       flex: 3,
       width: '100%',
       height: '100%',
       borderBottomRightRadius: 5,
-      borderTopRightRadius: 5,
+      borderRadius: 3,
       backgroundColor: colorHealthy,
-      borderLeftWidth: 0,
-      borderRightWidth: 1,
-      borderBottomWidth: 1,
-      borderTopWidth: 1,
-      borderColor: '#111',
+      borderWidth: 1,
+      borderColor: mainBackgroundColor,
     },
     licenseText: {
       fontFamily: mainFont1,
-      color: '#fff',
+      color: mainFontColor,
       textAlign: 'center'
     }
 })

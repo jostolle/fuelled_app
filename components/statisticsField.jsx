@@ -45,15 +45,18 @@ const StatisticsField = props => {
       }
 
       const chartConfig = {
-        backgroundGradientFrom: '#FFF',
+        backgroundGradientFrom: styles.main,
         backgroundGradientFromOpacity: 0.0,
         backgroundGradientTo: '#FFF',
         backgroundGradientToOpacity: 0.0,
-        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+        color: (opacity = 1) => `rgba(0,0,0, ${opacity})`,
         strokeWidth: 1, // optional, default 3
         fillShadowGradientOpacity: 0.7,
+        fillShadowGradientFromOpacity: 0.8,
+        fillShadowGradientToOpacity: 0.8,
         fillShadowGradientTo: colorBurnout,
         fillShadowGradientFrom: colorHealthy,
+        
         useShadowColorFromDataset: false, // optional
         segments: 0, 
         decimalPlaces: 0,
@@ -63,7 +66,7 @@ const StatisticsField = props => {
         propsForDots: {
           r: DotsYesNo(props.data.length),
           strokeWidth: "1",
-          stroke: "#fff"
+          stroke: colorWatchit,
         }
       };
     
@@ -74,7 +77,7 @@ const StatisticsField = props => {
             <Text style={styles.statisticsText}>{props.title} </Text>
           </View>
           <View style={{flex: 1, alignItems: 'flex-end'}}>
-            <Text style={calculateStyle(props.average)}>{props.average}</Text>
+            <Text style={styles.statisticsValueText}>{props.average}</Text>
           </View>
         </View>
         <View>
