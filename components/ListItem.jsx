@@ -2,9 +2,6 @@ import { Text, TouchableHighlight, View } from "react-native";
 import { styles, underlayColor } from "../styles";
 
 export default function ListItem({ label, onPress, children, ...rest }) {
-
-  const hasChildren = () => children ? true : false
-
   return (
     <>
       <View style={{flex: 1}}>
