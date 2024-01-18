@@ -5,7 +5,6 @@ import { View, Text, Switch } from 'react-native';
 import notifee from '@notifee/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { styles } from '../../../../styles.js';
-import { useFonts } from 'expo-font';
 import { ScrollView } from 'react-native-gesture-handler';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import ListItem from '../../../../components/ListItem.jsx';
@@ -14,11 +13,6 @@ import { createReminderNotification, scheduleNotification } from '../../../../ut
 export default function NotificationSettingsPage() {
   const notificationSettingString = "notificationSetting";
   const notificationTimeString = "notificationTimeSetting";
-
-  const [fontsLoaded] = useFonts({
-    'Questrial': require('../../../../assets/fonts/questrial.ttf'),
-    'Aquire': require('../../../../assets/fonts/Aquire-BW0ox.otf')
-  });
 
   const [heading, setHeading] = useState("Notification Settings");
   const [notificationEnabled, setNotificationEnabled] = useState(false);
