@@ -1,6 +1,6 @@
 // /app/(tabs)/settings/index.js
 
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import {StatusBar} from 'expo-status-bar'
 import { useState, useEffect } from 'react';
 import { View, Text, Pressable, Switch  } from 'react-native';
@@ -9,9 +9,9 @@ import { styles } from '../../../styles.js';
 import { createDateStringFromDate, getRandomInt } from '../../../utility/utility.js';
 import { useFonts } from 'expo-font';
 import { ScrollView } from 'react-native-gesture-handler';
+import ListItem from '../../../components/ListItem.jsx';
 
 export default function Page() {
-
   const notificationSettingString = "notificationSetting";
 
   const [fontsLoaded] = useFonts({
@@ -19,6 +19,7 @@ export default function Page() {
     'Aquire': require('../../../assets/fonts/Aquire-BW0ox.otf')
   });
 
+  const router = useRouter();
   const [heading, setHeading] = useState("Settings");
   const [notificationEnabled, setNotificationEnabled] = useState(false);
   const [advancedEnabled, setAdvancedEnabled] = useState(false);
@@ -40,6 +41,10 @@ export default function Page() {
     setAdvancedEnabled(previousState => !previousState);
   };
 
+  const goToNotifications = () => {
+    router.push('(tabs)/settings/notifications')
+  }
+
   // retrieve settings 
   const getSettings = async () => {
     try {
@@ -47,7 +52,7 @@ export default function Page() {
       const jsonValue = await AsyncStorage.getItem(notificationSettingString);
       if (jsonValue != null) {
         var data = JSON.parse(jsonValue);
-        if( data != null) {
+        if (data != null) {
           // update setting
           setNotificationEnabled(data);
         }
@@ -75,8 +80,8 @@ export default function Page() {
         const jsonValue = JSON.stringify(value);
         await AsyncStorage.setItem(date, jsonValue);
         // update date for next loop iteration
-        today.setDate(today.getDate()-1);
-      } 
+        today.setDate(today.getDate() - 1);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -88,40 +93,28 @@ export default function Page() {
 
   return (
     <>
-    <Stack.Screen options={{headerShown: false, title: 'Settings'}}></Stack.Screen>
-    <ScrollView style={styles.scrollViewContainer}> 
-        <View style={{height: 40}}></View>
+      <Stack.Screen options={{ headerShown: false, title: 'Settings' }}></Stack.Screen>
+      <ScrollView style={styles.scrollViewContainer}>
+        <View style={{ height: 40 }}></View>
         <Text style={styles.homeTabHeading}>{heading}</Text>
         <StatusBar style="auto"></StatusBar>
 
-        <View style={styles.settingsItem}>
-            <View style={{flex: 2, justifyContent: 'left'}}>
-                <Text style={styles.settingsListItem}>Daily Notification</Text> 
-            </View>
-            <View style={{flex: 1, alignItems: 'flex-end'}}>
-              <Switch
-                trackColor={{false: '#767577', true: '#81b0ff'}}
-                thumbColor={notificationEnabled ? '#f5dd4b' : '#f4f3f4'}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitchNotification}
-                value={notificationEnabled}
-              />
-            </View>                
-        </View>
+        <ListItem label="Notifications" onPress={goToNotifications} />
+
 
         <View style={styles.settingsItem}>
-            <View style={{flex: 2, justifyContent: 'left'}}>
-                <Text style={styles.settingsListItem}>Advanced Settings</Text> 
-            </View>
-            <View style={{flex: 1, alignItems: 'flex-end'}}>
-              <Switch
-                trackColor={{false: '#767577', true: '#81b0ff'}}
-                thumbColor={advancedEnabled ? '#f5dd4b' : '#f4f3f4'}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitchAdvanced}
-                value={advancedEnabled}
-              />
-            </View>                
+          <View style={{ flex: 2, justifyContent: 'left' }}>
+            <Text style={styles.settingsListItem}>Advanced Settings</Text>
+          </View>
+          <View style={{ flex: 1, alignItems: 'flex-end' }}>
+            <Switch
+              trackColor={{ false: '#767577', true: '#81b0ff' }}
+              thumbColor={advancedEnabled ? '#f5dd4b' : '#f4f3f4'}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleSwitchAdvanced}
+              value={advancedEnabled}
+            />
+          </View>
         </View>
 
         { advancedEnabled ? 
@@ -153,20 +146,20 @@ export default function Page() {
           </Pressable>
           <View style={{height: 40}}></View>
 
-          <Pressable onPress={() => {}} style={styles.statisticsButton}>
-            <Text style={styles.statisticsButtonText}>Export Data</Text>
-          </Pressable>
-          <Pressable onPress={() => {}} style={styles.statisticsButton}>
-            <Text style={styles.statisticsButtonText}>Import Data</Text>
-          </Pressable>
-          <View style={{height: 40}}></View>
+            <Pressable onPress={() => { }} style={styles.statisticsButton}>
+              <Text style={styles.statisticsButtonText}>Export Data</Text>
+            </Pressable>
+            <Pressable onPress={() => { }} style={styles.statisticsButton}>
+              <Text style={styles.statisticsButtonText}>Import Data</Text>
+            </Pressable>
+            <View style={{ height: 40 }}></View>
 
-          <View>
-            <Text style={styles.licenseText}>Icons from Freepik und UIcons</Text>
+            <View>
+              <Text style={styles.licenseText}>Icons from Freepik und UIcons</Text>
+            </View>
           </View>
-        </View>
-        : null }
-    </ScrollView>
+          : null}
+      </ScrollView>
     </>
   );
 }
