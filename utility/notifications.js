@@ -2,8 +2,8 @@ import notifee, { TriggerType, RepeatFrequency } from "@notifee/react-native"
 
 export function createReminderNotification() {
   return {
-    title: "reminder",
-    body: "reminder",
+    title: "Fuelled",
+    body: "Have you set your Fuelled values today?",
     android: {
       channelId: 'reminder',
     },

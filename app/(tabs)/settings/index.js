@@ -5,14 +5,18 @@ import {StatusBar} from 'expo-status-bar'
 import { useState, useEffect } from 'react';
 import { View, Text, Pressable, Switch  } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import notifee from '@notifee/react-native';
 import { styles } from '../../../styles.js';
 import { createDateStringFromDate, getRandomInt } from '../../../utility/utility.js';
 import { useFonts } from 'expo-font';
 import { ScrollView } from 'react-native-gesture-handler';
 import ListItem from '../../../components/ListItem.jsx';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { createReminderNotification, scheduleNotification } from '../../../utility/notifications.js';
 
 export default function Page() {
   const notificationSettingString = "notificationSetting";
+  const notificationTimeString = "notificationTimeSetting";
 
   const [fontsLoaded] = useFonts({
     'Questrial': require('../../../assets/fonts/questrial.ttf'),
@@ -22,6 +26,8 @@ export default function Page() {
   const router = useRouter();
   const [heading, setHeading] = useState("Settings");
   const [notificationEnabled, setNotificationEnabled] = useState(false);
+  const [timePickerVisible, setTimePickerVisible] = useState(false);
+  const [date, setDate] = useState(null);
   const [advancedEnabled, setAdvancedEnabled] = useState(false);
 
   const toggleSwitchNotification = async () => {
@@ -36,29 +42,57 @@ export default function Page() {
     }
   };
 
+  const saveTime = async (event, newDate) => {
+    setTimePickerVisible(false)
+    if (event.type === 'set') {
+      try {
+        const d = new Date(event.nativeEvent.timestamp);
+        await notifee.deleteChannel('reminder')
+        await notifee.createChannel({
+          id: 'reminder',
+          name: 'reminder notifications'
+        })
+        const noti = createReminderNotification();
+        await notifee.cancelTriggerNotifications();
+        await notifee.setNotificationCategories([{
+          id: 'reminder'
+        }])
+        await scheduleNotification(noti, d.getTime())
+        setDate(() => {
+          const stringDate = d.toString();
+          AsyncStorage.setItem(notificationTimeString, stringDate);
+          return d;
+        })
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  }
+
+  const openTimePicker = () => {
+    setTimePickerVisible(true);
+  }
+
   const toggleSwitchAdvanced = () => {
     // toggle
     setAdvancedEnabled(previousState => !previousState);
   };
 
-  const goToNotifications = () => {
-    router.push('(tabs)/settings/notifications')
-  }
-
   // retrieve settings 
   const getSettings = async () => {
     try {
       // load data
-      const jsonValue = await AsyncStorage.getItem(notificationSettingString);
-      if (jsonValue != null) {
-        var data = JSON.parse(jsonValue);
-        if (data != null) {
-          // update setting
-          setNotificationEnabled(data);
-        }
-        return true;
+      const isEnabled = await AsyncStorage.getItem(notificationSettingString)
+      const dateSetting = await AsyncStorage.getItem(notificationTimeString)
+
+      if (isEnabled !== null) {
+        setNotificationEnabled(JSON.parse(isEnabled))
+      }
+
+      if (dateSetting !== null) {
+        setDate(new Date(dateSetting))
       } else {
-        return false;
+        setDate(new Date())
       }
     } catch (e) {
       console.log(e);
@@ -99,7 +133,31 @@ export default function Page() {
         <Text style={styles.homeTabHeading}>{heading}</Text>
         <StatusBar style="auto"></StatusBar>
 
-        <ListItem label="Notifications" onPress={goToNotifications} />
+        <ListItem label="Daily Notification" onPress={toggleSwitchNotification}>
+          <Switch
+            trackColor={{false: '#767577', true: '#81b0ff'}}
+            thumbColor={notificationEnabled ? '#f5dd4b' : '#f4f3f4'}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitchNotification}
+            value={notificationEnabled}
+          />
+        </ListItem>
+
+        {notificationEnabled ?
+          <ListItem label="Notification Time" onPress={openTimePicker}>
+            {date ? 
+              <Text style={{color: "white"}}>
+                {`${date.toLocaleTimeString()}`}
+              </Text>
+            : null}
+          </ListItem>
+        : null}
+
+        {timePickerVisible ? 
+          <ListItem label="Change Time">
+            <DateTimePicker value={date} mode="time" onChange={saveTime} />
+          </ListItem>
+        : null}
 
 
         <View style={styles.settingsItem}>
