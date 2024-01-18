@@ -11,7 +11,18 @@
       "backgroundColor": "#161242"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "extraMavenRepos": [
+              "../../node_modules/@notifee/react-native/android/libs"
+              ]
+          },
+          "ios": {  }
+        }
+      ]
     ],
     "android": {
       "compileSdkVersion": 30,
