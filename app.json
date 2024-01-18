@@ -1,8 +1,14 @@
 {
   "expo": {
     "scheme": "acme",
+    "icon": "./assets/fuelled_icon.jpg",
     "web": {
       "bundler": "metro"
+    },
+    "splash": {
+      "image": "./assets/fuelled_icon.jpg",
+      "resizeMode": "contain",
+      "backgroundColor": "#161242"
     },
     "plugins": [
       "expo-router"
@@ -12,7 +18,7 @@
       "targetSdkVersion": 30,
       "package": "com.anonymous.buckets"
     },
-    "name": "buckets",
+    "name": "Fuelled",
     "slug": "buckets",
     "ios": {
       "bundleIdentifier": "com.anonymous.buckets"

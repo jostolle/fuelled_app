@@ -17,7 +17,7 @@ export default function Page() {
     'Aquire': require('../../../assets/fonts/Aquire-BW0ox.otf')
   });
 
-  const headingSubmitToday = "How full are your buckets today?";
+  const headingSubmitToday = "How full are your tanks today?";
   const updatedValuesText = "You've submitted today, but you can update the values.";
 
   // todo: on startup, read values from file

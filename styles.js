@@ -7,6 +7,7 @@ export const mainColor_blue = "#161242";
 export const mainColor_red = "#C1203D";
 export const mainBackgroundColor = "#F2F2F3";
 export const mainFontColor = "#000";
+export const underlayColor = "#cccccc";
 
 export const mainFont1 = 'Questrial';
 export const mainFont2 = 'Questrial';
@@ -79,6 +80,7 @@ export const styles = StyleSheet.create({
     statisticsButtonText: {
       fontSize: 16,
       lineHeight: 21,
+      textTransform: 'uppercase',
       fontWeight: 'bold',
       letterSpacing: 0.25,
       color: '#000',
@@ -87,6 +89,7 @@ export const styles = StyleSheet.create({
     homeTabHeading: {
       fontWeight: "bold",
       fontFamily: mainFont1,
+      textTransform: 'uppercase',
       fontSize: 24,
       margin: 16,
       textAlign: 'center',
@@ -100,6 +103,7 @@ export const styles = StyleSheet.create({
       fontWeight: "bold",
       flex:1,
       fontSize: 18,
+      textTransform: 'uppercase',
       padding: 8,
       fontFamily: mainFont1,
       color: mainFontColor,

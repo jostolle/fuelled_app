@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import { View, Text, Pressable, Switch  } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import notifee from '@notifee/react-native';
-import { styles } from '../../../styles.js';
+import { mainFontColor, styles } from '../../../styles.js';
 import { createDateStringFromDate, getRandomInt } from '../../../utility/utility.js';
 import { useFonts } from 'expo-font';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -146,7 +146,7 @@ export default function Page() {
         {notificationEnabled ?
           <ListItem label="Notification Time" onPress={openTimePicker}>
             {date ? 
-              <Text style={{color: "white"}}>
+              <Text style={{color: mainFontColor}}>
                 {`${date.toLocaleTimeString()}`}
               </Text>
             : null}
@@ -214,6 +214,7 @@ export default function Page() {
 
             <View>
               <Text style={styles.licenseText}>Icons from Freepik und UIcons</Text>
+              <Text style={styles.licenseText}>Special thanks to Alex (@vacarsu)</Text>
             </View>
           </View>
           : null}
