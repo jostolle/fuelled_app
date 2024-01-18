@@ -8,12 +8,12 @@ import * as SplashScreen from 'expo-splash-screen';
 
 SplashScreen.preventAutoHideAsync();
 
-// notifee.onBackgroundEvent(async ({type, detail}) => {
-//   switch(type) {
-//     case EventType.ACTION_PRESS:
-//       await notifee.cancelNotification(detail.notification.id)
-//   }
-// })
+notifee.onBackgroundEvent(async ({type, detail}) => {
+  switch(type) {
+    case EventType.ACTION_PRESS:
+      await notifee.cancelNotification(detail.notification.id)
+  }
+})
 
 export default function Page() {
   const [fontsLoaded, fontError] = useFonts({
