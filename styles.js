@@ -32,15 +32,11 @@ export const styles = StyleSheet.create({
       lineHeight: 20,
     },
     statisticsContainer: {
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'flex-end'
-    },
-    statisticsContainer: {
       flex: 1,
       backgroundColor: mainBackgroundColor,
       alignItems: 'center',
-      justifyContent: 'start'
+      justifyContent: 'flex-start',
+      margin: 8
     },
     buttonRow: {
       backgroundColor: '#fff',

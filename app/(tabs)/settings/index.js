@@ -161,14 +161,16 @@ export default function Page() {
   const generateData = async () => {
     try {
       var today = new Date();
-      for (let index = 0; index < 10; index++) {
+      today.setDate(today.getDate() - 100);
+      for (let index = 0; index < 100; index++) {
         // try get Data
         const date = createDateStringFromDate(today);
         let value = {emotional: getRandomInt(100), physical: getRandomInt(100), spiritual: getRandomInt(100), mental: getRandomInt(100)};
         const jsonValue = JSON.stringify(value);
         await AsyncStorage.setItem(date, jsonValue);
         // update date for next loop iteration
-        today.setDate(today.getDate() - 1);
+        today.setDate(today.getDate() + 1);
+        console.log(today);
       }
     } catch (e) {
       console.log(e);

@@ -49,25 +49,36 @@ export default function Page() {
       //console.log(items);
       
       const dataPrefixString = "date_";
-
+      let ninetyDaysAgo = new Date();
+      ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 91);
+      let comparisonDate = new Date();
       // go through all items, check if it's a date entry
       for (let x in items) {
         let item = items[x];
+        
         // only use date-entries
         if (item[0].startsWith(dataPrefixString)) {
-          var data = JSON.parse(item[1]);
-          runningData[0]+=data.emotional;
-          eData.push(data.emotional);
-          runningData[1]+=data.mental;
-          mData.push(data.mental);
-          runningData[2]+=data.physical;
-          pData.push(data.physical);
-          runningData[3]+=data.spiritual;
-          sData.push(data.spiritual);
-          entryCounter++;
+          comparisonDate.setFullYear(item[0].substring(5,9));
+          // months are zero-based...
+          comparisonDate.setMonth(item[0].substring(9,11)-1);
+          comparisonDate.setDate(item[0].substring(11,13));
+
+          if (comparisonDate > ninetyDaysAgo) {
+            // ignore data older than 90 days
+            var data = JSON.parse(item[1]);
+            runningData[0]+=data.emotional;
+            eData.push(data.emotional);
+            runningData[1]+=data.mental;
+            mData.push(data.mental);
+            runningData[2]+=data.physical;
+            pData.push(data.physical);
+            runningData[3]+=data.spiritual;
+            sData.push(data.spiritual);
+            entryCounter++;
+          }
         }
-        // ignore the rest
       }
+
       if (entryCounter > 0) {
         // update averages 
         setEmotional(Math.ceil(runningData[0]/entryCounter));
@@ -114,9 +125,10 @@ export default function Page() {
           : "" }
         { numberEntries > 0 ?
           <>
-          <View style={{padding: 16}}>
+          <View style={{padding: 8}}>
             <Text style={styles.regularText}>
-              You have tracked your values on {numberEntries} different days.
+              This shows your statistics for the last 90 days. {"\n"}{"\n"}
+              You have tracked your tanks on {numberEntries} days.{"\n"}{"\n"}
               Below you see your overall average as well as a graph of all the entries.
             </Text>
           </View>

@@ -56,7 +56,6 @@ const StatisticsField = props => {
         fillShadowGradientToOpacity: 0.8,
         fillShadowGradientTo: colorBurnout,
         fillShadowGradientFrom: colorHealthy,
-        
         useShadowColorFromDataset: false, // optional
         segments: 0, 
         decimalPlaces: 0,
@@ -80,7 +79,7 @@ const StatisticsField = props => {
             <Text style={styles.statisticsValueText}>{props.average}</Text>
           </View>
         </View>
-        <View>
+        <View style={{marginLeft: -24}}>
           <LineChart
               data={{
                 datasets: [
@@ -93,7 +92,7 @@ const StatisticsField = props => {
                   }
                 ]
               }}
-              width={300} // from react-native
+              width={320} // from react-native
               height={220}
               withInnerLines={false}
               yAxisLabel=""
