@@ -3,10 +3,10 @@
 import { Stack, useRouter } from 'expo-router';
 import {StatusBar} from 'expo-status-bar'
 import { useState, useEffect } from 'react';
-import { View, Text, Pressable, Switch  } from 'react-native';
+import { View, Text, Pressable, Switch, Platform  } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import notifee from '@notifee/react-native';
-import { mainFontColor, styles } from '../../../styles.js';
+import { mainFont1, mainFontColor, styles } from '../../../styles.js';
 import { createDateStringFromDate, getRandomInt } from '../../../utility/utility.js';
 import { useFonts } from 'expo-font';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -27,49 +27,94 @@ export default function Page() {
   const [heading, setHeading] = useState("Settings");
   const [notificationEnabled, setNotificationEnabled] = useState(false);
   const [timePickerVisible, setTimePickerVisible] = useState(false);
-  const [date, setDate] = useState(null);
+  const [dateMinute, setDateMinute] = useState(0);
+  const [dateHour, setDateHour] = useState(0);
+  const [dateUpdate, setDateUpdate] = useState(null);
   const [advancedEnabled, setAdvancedEnabled] = useState(false);
+  const [showPickerButtons, setShowPickerButtons] = useState(false);
 
   const toggleSwitchNotification = async () => {
     try {
       // toggle
-      setNotificationEnabled(previousState => !previousState);
+      let newNotificationSetting = !notificationEnabled;
+      setNotificationEnabled(newNotificationSetting);
       // store
-      const jsonValue = JSON.stringify(notificationEnabled);
+      const jsonValue = JSON.stringify(newNotificationSetting);
       await AsyncStorage.setItem(notificationSettingString, jsonValue);
+
+      // delete notification...
+      if (!newNotificationSetting) {
+        await notifee.deleteChannel('reminder')
+      } else {
+        // create notification with current time
+        await saveTime();
+      }
     } catch (e) {
       console.log(e);
     }
   };
 
-  const saveTime = async (event, newDate) => {
-    setTimePickerVisible(false)
+  const updateTime = async (event, date) => {
     if (event.type === 'set') {
-      try {
-        const d = new Date(event.nativeEvent.timestamp);
-        await notifee.deleteChannel('reminder')
-        await notifee.createChannel({
-          id: 'reminder',
-          name: 'reminder notifications'
-        })
-        const noti = createReminderNotification();
-        await notifee.cancelTriggerNotifications();
-        await notifee.setNotificationCategories([{
-          id: 'reminder'
-        }])
-        await scheduleNotification(noti, d.getTime())
-        setDate(() => {
-          const stringDate = d.toString();
-          AsyncStorage.setItem(notificationTimeString, stringDate);
-          return d;
-        })
-      } catch (e) {
-        console.error(e);
+      const newDate = new Date(event.nativeEvent.timestamp);      
+      setDateUpdate(newDate);
+
+      if (Platform.OS === "android") {
+        saveTime(newDate);
       }
     }
   }
 
+  const cancelSaveTime = () => {
+    setTimePickerVisible(false);
+  }
+
+  const saveTime = async (optionalDate) => {
+    setTimePickerVisible(false)
+    try {
+      // initialize for now
+      let d = new Date();
+      // set to tomorrow
+      d.setDate(d.getDate()+1);
+
+      if (dateUpdate != null) {
+        // if dateUpdate is set, i.e. picker was used
+        d.setMinutes(dateUpdate.getMinutes());
+        d.setHours(dateUpdate.getHours());
+      }
+      if (optionalDate != null && !(optionalDate === undefined)) {
+        // if dateUpdate is set, i.e. date was sent manually
+        // i.e. e.g. that the android picker was used...
+        d.setMinutes(optionalDate.getMinutes());
+        d.setHours(optionalDate.getHours());
+      }
+
+      await notifee.deleteChannel('reminder')
+      await notifee.createChannel({
+        id: 'reminder',
+        name: 'reminder notifications'
+      })
+      const noti = createReminderNotification();
+      await notifee.cancelTriggerNotifications();
+      await notifee.setNotificationCategories([{
+        id: 'reminder'
+      }])
+      await scheduleNotification(noti, d.getTime())
+      const hours = d.getHours() > 9 ? d.getHours() : "0"+d.getHours();
+      const minutes = d.getMinutes() > 9 ? d.getMinutes() : "0"+d.getMinutes();
+      let stringDate = ""+hours + minutes;
+      await AsyncStorage.setItem(notificationTimeString, stringDate);
+      await AsyncStorage.setItem(notificationSettingString, JSON.stringify(true));
+      setDateHour(hours);
+      setDateMinute(minutes);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   const openTimePicker = () => {
+    // set current date time 
+    setDateUpdate(new Date());
     setTimePickerVisible(true);
   }
 
@@ -90,9 +135,16 @@ export default function Page() {
       }
 
       if (dateSetting !== null) {
-        setDate(new Date(dateSetting))
+        setDateHour(parseInt(dateSetting.substring(0,2)));
+        setDateMinute(parseInt(dateSetting.substring(2,4)));
       } else {
-        setDate(new Date())
+        const d = new Date();
+        setDateHour(d.getHours());
+        setDateMinute(d.getMinutes());
+      }
+
+      if (Platform.OS === "ios") {
+        setShowPickerButtons(true);
       }
     } catch (e) {
       console.log(e);
@@ -133,7 +185,7 @@ export default function Page() {
         <Text style={styles.homeTabHeading}>{heading}</Text>
         <StatusBar style="auto"></StatusBar>
 
-        <ListItem label="Daily Notification" onPress={toggleSwitchNotification}>
+        <ListItem label="Daily Notification">
           <Switch
             trackColor={{false: '#767577', true: '#81b0ff'}}
             thumbColor={notificationEnabled ? '#f5dd4b' : '#f4f3f4'}
@@ -144,19 +196,30 @@ export default function Page() {
         </ListItem>
 
         {notificationEnabled ?
-          <ListItem label="Notification Time" onPress={openTimePicker}>
-            {date ? 
-              <Text style={{color: mainFontColor}}>
-                {`${date.toLocaleTimeString()}`}
-              </Text>
-            : null}
-          </ListItem>
+          <View style={{marginLeft: 16}}>
+            <ListItem label="Notification Time" onPress={openTimePicker}>
+                <Text style={{color: mainFontColor, fontFamily: mainFont1}}>
+                  {`${dateHour}:${dateMinute}`}
+                </Text>
+            </ListItem>
+          </View>
         : null}
 
         {timePickerVisible ? 
-          <ListItem label="Change Time">
-            <DateTimePicker value={date} mode="time" onChange={saveTime} />
-          </ListItem>
+          <>
+          <View flexDirection="row" justifyContent="center" style={{marginLeft: 16, marginBottom: 16}}>
+            <DateTimePicker value={dateUpdate} mode="time" onChange={updateTime} />
+          </View>
+          { showPickerButtons ? 
+          <View flexDirection="row" justifyContent="center" style={{alignItems: 'flex-end', alignContent: 'flex-end'}}>
+            <Pressable onPress={cancelSaveTime} style={styles.statisticsButton}>
+              <Text style={styles.statisticsButtonText}>Cancel</Text>
+            </Pressable>
+            <Pressable onPress={() => saveTime(null)} style={styles.statisticsButton}>
+              <Text style={styles.statisticsButtonText}>Save</Text>
+            </Pressable>
+          </View> : null }
+          </>
         : null}
 
 
