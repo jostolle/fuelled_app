@@ -29,7 +29,6 @@ export const styles = StyleSheet.create({
       fontFamily: mainFont2,
       color: mainFontColor,
       fontSize: 16,
-      fontWeight: 'bold',
       lineHeight: 20,
     },
     statisticsContainer: {
@@ -51,7 +50,6 @@ export const styles = StyleSheet.create({
     },
     statisticsText: {
       fontSize: 24,
-      fontWeight: 'bold',
       textTransform: 'uppercase',
       fontFamily: mainFont1,
       color: mainFontColor,
@@ -81,13 +79,11 @@ export const styles = StyleSheet.create({
       fontSize: 16,
       lineHeight: 21,
       textTransform: 'uppercase',
-      fontWeight: 'bold',
       letterSpacing: 0.25,
       color: '#000',
       fontFamily: mainFont1,
     },
     homeTabHeading: {
-      fontWeight: "bold",
       fontFamily: mainFont1,
       textTransform: 'uppercase',
       fontSize: 24,
@@ -100,7 +96,6 @@ export const styles = StyleSheet.create({
       margin: 8,
     },
     settingsListItem: {
-      fontWeight: "bold",
       flex:1,
       fontSize: 18,
       textTransform: 'uppercase',
@@ -136,11 +131,11 @@ export const styles = StyleSheet.create({
       shadowOffset: 0,
     },
     sliderHeading: {
-      fontWeight: "bold",
       textTransform: "uppercase",
       flex:1,
       fontSize: 18,
-      padding: 16,
+      paddingTop: 16,
+      padding: 8,
       paddingLeft: 0,
       fontFamily: mainFont1,
       color: mainFontColor,
@@ -150,7 +145,6 @@ export const styles = StyleSheet.create({
       fontSize: 18,
       fontFamily: mainFont1,
       borderRadius: 5,
-      fontWeight: 'bold',
       color: mainFontColor,
       padding: 16, 
       paddingRight: 0,
@@ -171,7 +165,6 @@ export const styles = StyleSheet.create({
     homeButtonText: {
       fontSize: 16,
       lineHeight: 21,
-      fontWeight: 'bold',
       letterSpacing: 0.25,
       textTransform: 'uppercase',
       color: '#000',

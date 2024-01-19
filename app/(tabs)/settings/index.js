@@ -135,8 +135,10 @@ export default function Page() {
       }
 
       if (dateSetting !== null) {
-        setDateHour(parseInt(dateSetting.substring(0,2)));
-        setDateMinute(parseInt(dateSetting.substring(2,4)));
+        const minute = parseInt(dateSetting.substring(0,2));
+        const hour = parseInt(dateSetting.substring(2,4));
+        setDateHour( hour > 9 ? hour : "0" + hour );
+        setDateMinute( minute > 9 ? minute : "0" + minute );
       } else {
         const d = new Date();
         setDateHour(d.getHours());
@@ -198,7 +200,7 @@ export default function Page() {
         {notificationEnabled ?
           <View style={{marginLeft: 16}}>
             <ListItem label="Notification Time" onPress={openTimePicker}>
-                <Text style={{color: mainFontColor, fontFamily: mainFont1}}>
+                <Text style={styles.regularText}>
                   {`${dateHour}:${dateMinute}`}
                 </Text>
             </ListItem>
