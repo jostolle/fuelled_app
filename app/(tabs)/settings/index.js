@@ -33,6 +33,8 @@ export default function Page() {
   const [advancedEnabled, setAdvancedEnabled] = useState(false);
   const [showPickerButtons, setShowPickerButtons] = useState(false);
 
+  const DEBUG = false;
+
   const toggleSwitchNotification = async () => {
     try {
       // toggle
@@ -73,10 +75,11 @@ export default function Page() {
     setTimePickerVisible(false)
     try {
       // initialize for now
+      const currentDate = new Date();
       let d = new Date();
-      // set to tomorrow
-      d.setDate(d.getDate()+1);
-
+      
+      // reset Seconds 
+      d.setSeconds(0);
       if (dateUpdate != null) {
         // if dateUpdate is set, i.e. picker was used
         d.setMinutes(dateUpdate.getMinutes());
@@ -88,6 +91,12 @@ export default function Page() {
         d.setMinutes(optionalDate.getMinutes());
         d.setHours(optionalDate.getHours());
       }
+      
+      // check if it's in the 
+      if (d < currentDate) {
+        d.setDate(d.getDate() + 1);
+      }
+
 
       await notifee.deleteChannel('reminder')
       await notifee.createChannel({
@@ -135,14 +144,19 @@ export default function Page() {
       }
 
       if (dateSetting !== null) {
-        const minute = parseInt(dateSetting.substring(0,2));
-        const hour = parseInt(dateSetting.substring(2,4));
+        const hour = parseInt(dateSetting.substring(0,2));
+        const minute = parseInt(dateSetting.substring(2,4));
         setDateHour( hour > 9 ? hour : "0" + hour );
         setDateMinute( minute > 9 ? minute : "0" + minute );
+        let newUpdateDate = new Date();
+        newUpdateDate.setMinutes(minute);
+        newUpdateDate.setHours(hour);
+        setDateUpdate(newUpdateDate);
       } else {
         const d = new Date();
         setDateHour(d.getHours());
         setDateMinute(d.getMinutes());
+        setDateUpdate(d);
       }
 
       if (Platform.OS === "ios") {
@@ -161,8 +175,8 @@ export default function Page() {
   const generateData = async () => {
     try {
       var today = new Date();
-      today.setDate(today.getDate() - 100);
-      for (let index = 0; index < 100; index++) {
+      today.setDate(today.getDate() - 2);
+      for (let index = 0; index < 3; index++) {
         // try get Data
         const date = createDateStringFromDate(today);
         let value = {emotional: getRandomInt(100), physical: getRandomInt(100), spiritual: getRandomInt(100), mental: getRandomInt(100)};
@@ -170,7 +184,6 @@ export default function Page() {
         await AsyncStorage.setItem(date, jsonValue);
         // update date for next loop iteration
         today.setDate(today.getDate() + 1);
-        console.log(today);
       }
     } catch (e) {
       console.log(e);
@@ -226,22 +239,22 @@ export default function Page() {
           </>
         : null}
 
-
-        <View style={styles.settingsItem}>
-          <View style={{ flex: 2, justifyContent: 'left' }}>
-            <Text style={styles.settingsListItem}>Advanced Settings</Text>
+        { DEBUG ? 
+          <View style={styles.settingsItem}>
+            <View style={{ flex: 2, justifyContent: 'left' }}>
+              <Text style={styles.settingsListItem}>Advanced Settings</Text>
+            </View>
+            <View style={{ flex: 1, alignItems: 'flex-end' }}>
+              <Switch
+                trackColor={{ false: '#767577', true: '#81b0ff' }}
+                thumbColor={advancedEnabled ? '#f5dd4b' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitchAdvanced}
+                value={advancedEnabled}
+              />
+            </View>
           </View>
-          <View style={{ flex: 1, alignItems: 'flex-end' }}>
-            <Switch
-              trackColor={{ false: '#767577', true: '#81b0ff' }}
-              thumbColor={advancedEnabled ? '#f5dd4b' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSwitchAdvanced}
-              value={advancedEnabled}
-            />
-          </View>
-        </View>
-
+          : null }
         { advancedEnabled ? 
         <View >
           <View style={{height: 40}}></View>
@@ -278,13 +291,13 @@ export default function Page() {
               <Text style={styles.statisticsButtonText}>Import Data</Text>
             </Pressable>
             <View style={{ height: 40 }}></View>
-
-            <View>
-              <Text style={styles.licenseText}>Icons from Freepik und UIcons</Text>
-              <Text style={styles.licenseText}>Special thanks to Alex (@vacarsu)</Text>
-            </View>
           </View>
           : null}
+          <View style={{height: 40}}></View>
+          <View>
+            <Text style={styles.licenseText}>Icons from Freepik und UIcons</Text>
+            <Text style={styles.licenseText}>Special thanks to Alex (@vacarsu)</Text>
+          </View>
       </ScrollView>
     </>
   );

@@ -17,7 +17,7 @@ export default function Page() {
   const [physicalData, setPhysicalData] = useState([]);
   const [mentalData, setMentalData] = useState([]);
   const [spiritualData, setSpiritualData] = useState([]);
-  const [numberEntries, setNumberEntries] = useState([]);
+  const [numberEntries, setNumberEntries] = useState(-1);
   const [heading, setHeading] = useState("Statistics");
 
   const [fontsLoaded] = useFonts({
@@ -86,6 +86,14 @@ export default function Page() {
         setPhysical(Math.ceil(runningData[2]/entryCounter));
         setSpiritual(Math.ceil(runningData[3]/entryCounter));
 
+        // if there's only one entry, duplicate it so the graph looks nice
+        if (entryCounter == 1) {
+          eData.push(eData[0]);
+          mData.push(mData[0]);
+          pData.push(pData[0]);
+          sData.push(sData[0]);
+        }
+
         // update data sets
         setEmotionalData(eData);
         setMentalData(mData);
@@ -116,6 +124,13 @@ export default function Page() {
         <View style={{height: 40}}></View>
         <Text style={styles.homeTabHeading}>{heading}</Text>
         <StatusBar style="auto"></StatusBar>
+        { numberEntries == -1 ? 
+          <View style={{padding: 16}}>
+            <Text style={styles.regularText}>
+              Loading...
+            </Text>
+          </View>
+          : "" }
         { numberEntries == 0 ? 
           <View style={{padding: 16}}>
             <Text style={styles.regularText}>
