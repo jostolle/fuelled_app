@@ -21,6 +21,7 @@ export default function TabsLayout() {
           tabBarLabel: () => null,
           title: "Home",
           color: '#fff',
+          unmountOnBlur: true,
           tabBarIcon: ({ color }) => (
             <FontAwesome
               size={28}

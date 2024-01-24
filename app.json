@@ -1,12 +1,12 @@
 {
   "expo": {
     "scheme": "acme",
-    "icon": "./assets/fuelled_icon.jpg",
+    "icon": "./assets/fuelled_icon.png",
     "web": {
       "bundler": "metro"
     },
     "splash": {
-      "image": "./assets/fuelled_icon.jpg",
+      "image": "./assets/fuelled_icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#161242"
     },
@@ -18,21 +18,28 @@
           "android": {
             "extraMavenRepos": [
               "../../node_modules/@notifee/react-native/android/libs"
-              ]
+            ]
           },
-          "ios": {  }
+          "ios": {}
         }
       ]
     ],
     "android": {
-      "compileSdkVersion": 30,
-      "targetSdkVersion": 30,
-      "package": "com.anonymous.buckets"
+      "package": "com.anonymous.fuelled"
     },
     "name": "Fuelled",
-    "slug": "buckets",
+    "slug": "fuelled",
     "ios": {
-      "bundleIdentifier": "com.anonymous.buckets"
-    }
+      "bundleIdentifier": "com.anonymous.fuelled"
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "bf54fd86-3ace-4216-813e-d9f795f028a6"
+      }
+    },
+    "owner": "jostolle"
   }
 }
