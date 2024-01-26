@@ -92,7 +92,7 @@ export default function Page() {
         d.setHours(optionalDate.getHours());
       }
       
-      // check if it's in the 
+      // check if it's in the past then add a day
       if (d < currentDate) {
         d.setDate(d.getDate() + 1);
       }

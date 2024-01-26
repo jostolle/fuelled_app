@@ -15,3 +15,5 @@ export function createDateStringFromDate(dateInput) {
 export function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
+
+export const InitialSliderValue = 50;

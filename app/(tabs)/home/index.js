@@ -1,12 +1,12 @@
 // /app/(tabs)/home/index.js
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useState, useCallback, useEffect } from 'react';
-import { View, ScrollView, Text, Pressable } from 'react-native';
+import { useState, useCallback, useEffect, useRef } from 'react';
+import { View, ScrollView, Text, Pressable, AppState } from 'react-native';
 import { mainFont1, mainFontColor, styles } from '../../../styles.js';
 import MySlider from '../../../components/MySlider.jsx';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { createDateStringFromToday } from '../../../utility/utility.js';
+import { InitialSliderValue, createDateStringFromToday } from '../../../utility/utility.js';
 import { useFonts } from 'expo-font';
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
@@ -20,15 +20,18 @@ export default function Page() {
   const headingSubmitToday = "How full are your tanks today?";
   const updatedValuesText = "You've submitted today, but you can update the values.";
 
+  const INITIALVALUE = InitialSliderValue;
+
   // todo: on startup, read values from file
-  const [emotional, setEmotional] = useState(50);
-  const [physical, setPhysical] = useState(50);
-  const [mental, setMental] = useState(50);
-  const [spiritual, setSpiritual] = useState(50);
+  const [emotional, setEmotional] = useState(INITIALVALUE);
+  const [physical, setPhysical] = useState(INITIALVALUE);
+  const [mental, setMental] = useState(INITIALVALUE);
+  const [spiritual, setSpiritual] = useState(INITIALVALUE);
   const [buttonTitle, setButtonTitle] = useState("Submit");
   const [welcomeMessage, setWelcomeMessage] = useState(headingSubmitToday);
   const [submitted, setSubmitted] = useState(false);
   const [submitConfirm, setSubmitConfirm] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
   function updateBucketValues(update) {
     if (update.name == "Emotional") {
@@ -77,6 +80,7 @@ export default function Page() {
         setSubmitted(true);
         setButtonTitle("Update");
       } else {
+        // reset UI
         setSubmitted(false);
         setButtonTitle("Submit");
       }
@@ -86,6 +90,23 @@ export default function Page() {
   }
 
   useEffect(() => {
+    // if app becomes active => update values
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if (
+        nextAppState === 'active'
+      ) {
+        // check if there's data from today
+        getTodayValue();
+        // trigger refresh of Slider
+        setRefresh(true);
+        setRefresh(false);
+      }
+
+      return () => {
+        subscription.remove();
+      }
+    });
+    // also: check values initially
     getTodayValue();
  }, []);
 
@@ -99,10 +120,10 @@ export default function Page() {
           <Text style={styles.homeTabHeading}>{welcomeMessage}</Text>
         </View>
         <StatusBar style="auto"></StatusBar>
-        <MySlider title="Physical" callBackUpdate={updateBucketValues}/>
-        <MySlider title="Emotional" callBackUpdate={updateBucketValues} />
-        <MySlider title="Spiritual" callBackUpdate={updateBucketValues}/>
-        <MySlider title="Mental" callBackUpdate={updateBucketValues}/>
+        <MySlider title="Physical" refresh={refresh} callBackUpdate={updateBucketValues}/>
+        <MySlider title="Emotional" refresh={refresh} callBackUpdate={updateBucketValues} />
+        <MySlider title="Spiritual" refresh={refresh} callBackUpdate={updateBucketValues}/>
+        <MySlider title="Mental" refresh={refresh} callBackUpdate={updateBucketValues}/>
         
         <View style={{height: 20}}></View>
         <View flexDirection='row'>

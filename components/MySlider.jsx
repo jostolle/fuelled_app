@@ -1,12 +1,12 @@
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import { styles, colorBurnout, colorHealthy, colorWatchit } from '../styles';
 import { Slider } from '@miblanchard/react-native-slider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { createDateStringFromToday } from '../utility/utility.js';
+import { InitialSliderValue, createDateStringFromToday } from '../utility/utility.js';
 
 const MySlider = props => {
-    const [value, setValue] = useState(50);
+    const [value, setValue] = useState(InitialSliderValue);
     const [bgc, setBackgroundColor] = useState("#ddd");
 
     function mySetValues(valueArray){
@@ -72,6 +72,10 @@ const MySlider = props => {
                 }
                 return true;
             } else {
+                // reset values
+                setValue(InitialSliderValue);
+                // let parent know
+                props.callBackUpdate({name: props.title, value: InitialSliderValue});
                 return false;
             }
         } catch (e) {
@@ -80,8 +84,16 @@ const MySlider = props => {
         }
     };
 
+    if (props.refresh == true) {
+        getData();
+    }
+
+    useEffect(() => {
+        getData();
+     }, []);
+
     return (
-        <View style={styles.slideContainer} onLayout={getData}>
+        <View style={styles.slideContainer}>
             <View style={{flexDirection: 'row'}}>
                 <View style={{flex: 1, justifyContent: 'center'}}>
                     <Text style={styles.sliderHeading}>{props.title}</Text> 
