@@ -25,7 +25,8 @@
       ]
     ],
     "android": {
-      "package": "com.anonymous.fuelled"
+      "package": "com.anonymous.fuelled",
+      "versionCode": 2
     },
     "name": "Fuelled",
     "slug": "fuelled",
